@@ -1688,12 +1688,6 @@ class ForUpdateArg(ClauseElement):
             ``'read'`` - translates to ``LOCK IN SHARE MODE`` (for MySQL),
             and ``FOR SHARE`` (for PostgreSQL)
 
-            ``'no_key'`` - translates to ``FOR NO KEY UPDATE`` (for PostgreSQL),
-            and ``FOR UPDATE`` on other backends
-
-            ``'no_key_nowait'`` - translates to ``FOR NO KEY UPDATE NOWAIT`` (for PostgreSQL),
-            and ``FOR UPDATE`` on other backends
-
             ``'read_nowait'`` - translates to ``FOR SHARE NOWAIT``
             (supported by PostgreSQL). ``FOR SHARE`` and
             ``FOR SHARE NOWAIT`` (PostgreSQL).
@@ -1702,21 +1696,17 @@ class ForUpdateArg(ClauseElement):
         if arg in (None, False):
             return None
 
-        nowait = read = no_key = False
+        nowait = read = False
         if arg == 'nowait':
             nowait = True
         elif arg == 'read':
             read = True
         elif arg == 'read_nowait':
             read = nowait = True
-        elif arg == 'no_key':
-            no_key = True
-        elif arg == 'no_key_nowait':
-            no_key = nowait = True
         elif arg is not True:
             raise exc.ArgumentError("Unknown for_update argument: %r" % arg)
 
-        return ForUpdateArg(read=read, nowait=nowait, no_key=no_key)
+        return ForUpdateArg(read=read, nowait=nowait)
 
     @property
     def legacy_for_update_value(self):
@@ -1737,6 +1727,8 @@ class ForUpdateArg(ClauseElement):
         """Represents arguments specified to :meth:`.Select.for_update`.
 
         .. versionadded:: 0.9.0
+
+        .. versionadded:: 1.1.0 Added the ``no_key`` option.
         """
 
         self.nowait = nowait

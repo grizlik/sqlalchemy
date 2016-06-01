@@ -22,6 +22,11 @@
     :version: 1.1.0b1
 
     .. change::
+        :tags: feature, postgresql
+
+        Added support for PostgreSQL lockmode "FOR NO KEY UPDATE" to both Core and ORM.
+
+    .. change::
         :tags: change, orm
         :tickets: 3394
 

@@ -1427,6 +1427,8 @@ class Query(object):
         .. versionadded:: 0.9.0 :meth:`.Query.with_for_update` supersedes
            the :meth:`.Query.with_lockmode` method.
 
+        .. versionadded:: 1.1.0 Added the ``no_key`` option.
+
         .. seealso::
 
             :meth:`.GenerativeSelect.with_for_update` - Core level method with
